@@ -1,0 +1,78 @@
+<div class="container mt-5">
+    <h2>Currency Converter</h2>
+
+    <div class="form-row align-items-center">
+        <div class="col-auto">
+            <label for="amount" class="sr-only">Amount</label>
+            <input
+                required
+                type="number"
+                id="amount"
+                class="form-control mb-2 mr-sm-2"
+                placeholder="Enter amount"
+                [(ngModel)]="amount"
+            />
+        </div>
+        <div class="col-auto">
+            <label for="fromCurrency" class="sr-only">From Currency</label>
+            <select
+                id="fromCurrency"
+                class="form-control mb-2 mr-sm-2"
+                [(ngModel)]="selectedFromCurrency"
+            >
+                @for (currencyRate of rateEntry?.currencyRates; track $index) {
+                @if (currencyRate.currency) {
+                <option value="{{ currencyRate.currency }}">
+                    {{ currencyRate.currency }}
+                </option>
+                } }
+            </select>
+        </div>
+        <div class="col-auto">
+            <label for="toCurrency" class="sr-only">To Currency</label>
+            <select
+                id="toCurrency"
+                class="form-control mb-2 mr-sm-2"
+                [(ngModel)]="selectedToCurrency"
+            >
+                @for (currencyRate of rateEntry?.currencyRates; track $index) {
+                @if (currencyRate.currency) {
+                <option value="{{ currencyRate.currency }}">
+                    {{ currencyRate.currency }}
+                </option>
+                } }
+            </select>
+        </div>
+        <div class="col-auto">
+            <label for="conversionRate" class="sr-only">Conversion Rate:</label>
+            <input
+                type="text"
+                class="form-control mb-2 mr-sm-2"
+                id="conversionRate"
+                [placeholder]="calculateConversion()"
+                readonly
+            />
+        </div>
+        <div class="col-auto">
+            <button
+                type="button"
+                class="btn btn-primary mb-2"
+                [disabled]="IsConvertButtonDisabled()"
+                (click)="convertCurrency()"
+            >
+                Convert
+            </button>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="result">Converted Amount:</label>
+        <input
+            type="text"
+            class="form-control"
+            id="result"
+            [value]="convertedAmount"
+            readonly
+        />
+    </div>
+</div>
